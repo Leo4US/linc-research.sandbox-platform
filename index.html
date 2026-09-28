@@ -54,12 +54,11 @@
                 </div>
             </div>
 
-            <!-- Navegação Pública -->
+            <!-- Navegação Pública (Aba Transparência Removida) -->
             <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold text-linc-deep">
                 <button onclick="app.navigate('home')" class="hover:text-linc-blue transition">Início</button>
                 <button onclick="app.navigate('regras')" class="hover:text-linc-blue transition">Regras & Reembolso</button>
                 <button onclick="app.navigate('extensao')" class="hover:text-linc-blue transition">Curso Extensão</button>
-                <button onclick="app.navigate('transparencia')" class="hover:text-linc-blue transition">Transparência</button>
             </nav>
 
             <!-- Seletor de Perfis (RBAC Demo) e Autenticação -->
@@ -86,7 +85,7 @@
     <div id="funnel-banner" class="bg-linc-deep text-white py-2.5 px-4 shadow-inner">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm gap-2">
             <div class="flex items-center space-x-2">
-                <span class="bg-linc-turquoise/20 text-linc-turquoise border border-linc-turquoise/40 px-2 py-0.5 rounded-full font-bold uppercase text-[10px]">Triagem </span>
+                <span class="bg-linc-turquoise/20 text-linc-turquoise border border-linc-turquoise/40 px-2 py-0.5 rounded-full font-bold uppercase text-[10px]">Triagem</span>
                 <span id="funnel-text" class="text-slate-200">Submissão com pré-validação. Se o trabalho for negado pela banca, o valor da taxa é estornado, conforme políticas de reembolso.</span>
             </div>
             <button onclick="app.navigate('regras')" class="text-xs bg-linc-turquoise hover:bg-emerald-300 text-linc-deep font-bold px-3 py-1 rounded-md transition whitespace-nowrap">
@@ -162,7 +161,7 @@
         import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const EVENT_CONFIG = {
-            title: "JORNADA DE ENGENHARIA DE DADOS & INTELIGÊNCIA ARTIFICIAL",
+            title: "JORNADA TECNOLÓGICA DE ENGENHARIA DE DADOS & INTELIGÊNCIA ARTIFICIAL",
             institution: "LINC Research & Innovation Group",
             subBrand: "LINC'S PROJECT / Sandbox",
             submissionFee: 50.00,
@@ -272,14 +271,12 @@
                     case 'extensao':
                         container.innerHTML = Views.Extensao();
                         break;
-                    case 'transparencia':
-                        container.innerHTML = Views.Transparencia();
-                        break;
                     case 'author-dashboard':
                         container.innerHTML = Views.AuthorDashboard();
                         break;
                     case 'reviewer-dashboard':
                         container.innerHTML = Views.ReviewerDashboard();
+                        setTimeout(() => this.renderReviewerChart(), 100);
                         break;
                     case 'fundacao-dashboard':
                         container.innerHTML = Views.FundacaoDashboard();
@@ -339,6 +336,35 @@
                 this.navigate('author-dashboard');
             },
 
+            renderReviewerChart() {
+                const ctx = document.getElementById('chartCriteria');
+                if (ctx) {
+                    new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Estrutura do Texto', 'Tema', 'Aderência', 'Replicabilidade', 'Aplicação'],
+                            datasets: [{
+                                label: 'Média das Submissões',
+                                data: [8.5, 9.0, 8.8, 7.9, 9.2],
+                                backgroundColor: 'rgba(81, 112, 255, 0.2)',
+                                borderColor: '#5170FF',
+                                pointBackgroundColor: '#1C1B45'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                r: {
+                                    angleLines: { color: '#E2E8F0' },
+                                    suggestedMin: 0,
+                                    suggestedMax: 10
+                                }
+                            }
+                        }
+                    });
+                }
+            },
+
             renderNavAuth() {
                 const authBtns = document.getElementById('auth-buttons');
                 if (state.currentUser) {
@@ -353,7 +379,6 @@
         const Views = {
             Home: () => `
                 <div class="space-y-10">
-                    <!-- HERO SECTION CLARA E COM BOTÕES NO TOPO -->
                     <section class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm">
                         <div class="flex justify-center mb-2">
                             <img src="Linc-Research-&-Innovation-em-preto-.png" alt="LINC Group" class="h-20 w-auto object-contain">
@@ -366,7 +391,6 @@
                             Plataforma oficial de submissão de cases técnicos do LINC Group. Processo seguro, pré-validação inteligente e garantia de reembolso integral em caso de não aprovação.
                         </p>
 
-                        <!-- BOTÕES SUPERIORES DE SUBMISSÃO E PAINEL -->
                         <div class="flex flex-wrap justify-center gap-4 pt-4">
                             <button onclick="app.openAuthModal('register')" class="bg-linc-blue hover:bg-indigo-600 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-lg shadow-linc-blue/20 flex items-center">
                                 <i data-lucide="upload-cloud" class="w-5 h-5 mr-2"></i> Submeter Trabalho / Case
@@ -377,7 +401,6 @@
                         </div>
                     </section>
 
-                    <!-- EIXOS TEMÁTICOS -->
                     <section class="grid md:grid-cols-3 gap-6">
                         ${EVENT_CONFIG.tracks.map((track, idx) => `
                             <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3 shadow-sm hover:border-linc-blue/40 transition">
@@ -396,7 +419,7 @@
                 <div class="max-w-4xl mx-auto space-y-8">
                     <div class="bg-white border border-slate-200 p-8 rounded-3xl space-y-6 shadow-sm">
                         <div>
-                            <span class="bg-linc-blue/10 text-linc-blue border border-linc-blue/20 px-3 py-1 rounded-full text-xs font-bold">Transparência Institucional</span>
+                            <span class="bg-linc-blue/10 text-linc-blue border border-linc-blue/20 px-3 py-1 rounded-full text-xs font-bold">Diretrizes do Evento</span>
                             <h2 class="text-2xl font-bold text-linc-deep mt-2">Regras do Evento & Política Financeira</h2>
                             <p class="text-xs text-slate-500">Termos pactuados entre o LINC Research Group, Participantes e Fundação de Apoio.</p>
                         </div>
@@ -430,7 +453,6 @@
                         </div>
                     </div>
 
-                    <!-- FORMULÁRIO DE SUBMISSÃO RÁPIDA -->
                     <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-4 shadow-sm">
                         <h3 class="text-base font-bold text-linc-deep flex items-center">
                             <i data-lucide="file-plus" class="w-5 h-5 mr-2 text-linc-blue"></i>
@@ -459,7 +481,6 @@
                         </form>
                     </div>
 
-                    <!-- TABELA DE STATUS DO PARTICIPANTE -->
                     <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                         <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
                             <h3 class="text-sm font-bold text-linc-deep">Meus Trabalhos e Status Financeiro</h3>
@@ -495,6 +516,73 @@
                 </div>
             `,
 
+            ReviewerDashboard: () => `
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-linc-deep">Painel do Parecerista</h2>
+                        <p class="text-xs text-slate-500">Avaliação técnico-científica duplo-cega com base no conjunto de critérios estabelecidos.</p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- CONJUNTO DE CRITÉRIOS REAIS -->
+                        <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm space-y-4">
+                            <h3 class="text-sm font-bold text-linc-deep border-b border-slate-100 pb-2">Conjunto de Critérios de Avaliação</h3>
+                            <ul class="space-y-2 text-xs text-slate-700">
+                                <li class="flex justify-between items-center bg-slate-50 p-2 rounded">
+                                    <span class="font-semibold">1. Estrutura do Texto:</span>
+                                    <span class="text-slate-500">Organização, clareza e norma culta</span>
+                                </li>
+                                <li class="flex justify-between items-center bg-slate-50 p-2 rounded">
+                                    <span class="font-semibold">2. Tema:</span>
+                                    <span class="text-slate-500">Relevância e delimitação do problema</span>
+                                </li>
+                                <li class="flex justify-between items-center bg-slate-50 p-2 rounded">
+                                    <span class="font-semibold">3. Aderência:</span>
+                                    <span class="text-slate-500">Alinhamento aos eixos da Jornada</span>
+                                </li>
+                                <li class="flex justify-between items-center bg-slate-50 p-2 rounded">
+                                    <span class="font-semibold">4. Replicabilidade:</span>
+                                    <span class="text-slate-500">Clareza metodológica/código</span>
+                                </li>
+                                <li class="flex justify-between items-center bg-slate-50 p-2 rounded">
+                                    <span class="font-semibold">5. Aplicação:</span>
+                                    <span class="text-slate-500">Impacto e viabilidade prática</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- GRÁFICO DE AVALIAÇÃO -->
+                        <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-sm flex flex-col items-center justify-center">
+                            <h3 class="text-sm font-bold text-linc-deep mb-2 w-full text-left">Média Global por Critério</h3>
+                            <canvas id="chartCriteria" class="max-h-60 w-full"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- TABELA DE SUBMISSÕES PARA PARECER -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+                            <h3 class="text-sm font-bold text-linc-deep">Trabalhos Atribuídos (Double-Blind)</h3>
+                        </div>
+                        <div class="divide-y divide-slate-200 text-xs">
+                            ${state.submissions.map(sub => `
+                                <div class="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                    <div class="space-y-1">
+                                        <span class="font-mono font-bold text-linc-blue">${sub.pseudonymId}</span>
+                                        <h4 class="font-bold text-slate-800">${sub.title}</h4>
+                                        <p class="text-slate-500">${sub.track}</p>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="alert('Iniciando avaliação do documento ${sub.pseudonymId}')" class="bg-linc-blue text-white font-bold px-3 py-1.5 rounded hover:bg-indigo-600 transition">
+                                            Avaliar Submissão
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            `,
+
             FundacaoDashboard: () => `
                 <div class="space-y-8">
                     <div>
@@ -502,11 +590,10 @@
                         <p class="text-xs text-slate-500">Ambiente simplificado para conciliação financeira, checagem de pagamentos e estornos.</p>
                     </div>
 
-                    <!-- PAINEL DE CONCILIAÇÃO RÁPIDA -->
                     <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                         <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
                             <h3 class="text-sm font-bold text-linc-deep">Planilha de Checagem e Status de Taxas</h3>
-                            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">3 Registros</span>
+                            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">${state.submissions.length} Registros</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
@@ -545,6 +632,34 @@
                 </div>
             `,
 
+            CuratorDashboard: () => `
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-linc-deep">Painel de Curadoria LINC</h2>
+                        <p class="text-xs text-slate-500">Métricas operacionais, distribuição de banca e acompanhamento do fluxo de submissões.</p>
+                    </div>
+
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                            <span class="text-xs text-slate-500 font-bold uppercase">Total de Submissões</span>
+                            <p class="text-2xl font-extrabold text-linc-deep mt-1">${state.submissions.length}</p>
+                        </div>
+                        <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                            <span class="text-xs text-slate-500 font-bold uppercase">Taxas Confirmadas</span>
+                            <p class="text-2xl font-extrabold text-emerald-600 mt-1">
+                                ${state.submissions.filter(s => s.payStatus.includes('Pago')).length}
+                            </p>
+                        </div>
+                        <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                            <span class="text-xs text-slate-500 font-bold uppercase">Em Análise Técnica</span>
+                            <p class="text-2xl font-extrabold text-indigo-600 mt-1">
+                                ${state.submissions.filter(s => s.evalStatus === 'Em Análise').length}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            `,
+
             Extensao: () => `
                 <div class="max-w-4xl mx-auto space-y-8">
                     <div class="bg-white border border-slate-200 p-8 rounded-3xl space-y-4 shadow-sm">
@@ -554,27 +669,6 @@
                             Curso prático e avançado com certificação oficial do LINC Group para capacitação de profissionais e alunos de tecnologia.
                         </p>
                     </div>
-                </div>
-            `,
-
-            Transparencia: () => `
-                <div class="space-y-6">
-                    <h2 class="text-2xl font-bold text-linc-deep">Relatórios de Transparência</h2>
-                    <p class="text-xs text-slate-500">Acompanhamento contábil das taxas arrecadadas e repasses de bolsas.</p>
-                </div>
-            `,
-
-            ReviewerDashboard: () => `
-                <div class="space-y-6">
-                    <h2 class="text-2xl font-bold text-linc-deep">Painel do Parecerista</h2>
-                    <p class="text-xs text-slate-500">Avaliação duplo-cega de trabalhos submetidos.</p>
-                </div>
-            `,
-
-            CuratorDashboard: () => `
-                <div class="space-y-6">
-                    <h2 class="text-2xl font-bold text-linc-deep">Painel de Curadoria LINC</h2>
-                    <p class="text-xs text-slate-500">Métricas gerais e exportação de relatórios anonimizados.</p>
                 </div>
             `
         };
