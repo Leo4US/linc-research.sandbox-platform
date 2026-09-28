@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="dark h-full">
+<html lang="pt-BR" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,11 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS CDN com Custom Cores do Manual LINC -->
+    <!-- Tailwind CSS CDN com Custom Cores do Manual LINC em Fundo Claro -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -22,12 +21,13 @@
                     },
                     colors: {
                         linc: {
-                            deep: '#1C1B45',      /* Azul Profundo - Fundo Principal */
-                            blue: '#5170FF',      /* Azul Mídia - Destaques/Ações */
-                            turquoise: '#3EDDBF', /* Turquesa - Secundário */
-                            neon: '#63FF29',      /* Verde Neon - Conversão/Highlights */
-                            card: '#242354',      /* Elevação de Card/Container */
-                            border: '#33326c'     /* Bordas de Container */
+                            deep: '#1C1B45',      /* Azul Profundo Institucional */
+                            blue: '#5170FF',      /* Azul Mídia - Botões/Ações */
+                            turquoise: '#3EDDBF', /* Turquesa - Acentos */
+                            neon: '#63FF29',      /* Verde Neon */
+                            lightBg: '#F8FAFC',   /* Fundo Claro Suave */
+                            cardLight: '#FFFFFF', /* Card Branco */
+                            borderLight: '#E2E8F0'/* Borda Clara */
                         }
                     }
                 }
@@ -39,56 +39,58 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body class="h-full bg-linc-deep text-slate-100 flex flex-col font-sans antialiased selection:bg-linc-blue selection:text-white">
+<body class="h-full bg-linc-lightBg text-slate-800 flex flex-col font-sans antialiased selection:bg-linc-blue selection:text-white">
 
     <!-- ========================================== -->
-    <!-- NAVEGAÇÃO E HEADER GLOBAL                  -->
+    <!-- NAVEGAÇÃO E HEADER GLOBAL (TEMA CLARO)      -->
     <!-- ========================================== -->
-    <header class="border-b border-linc-border bg-linc-deep/90 backdrop-blur sticky top-0 z-50">
+    <header class="border-b border-linc-borderLight bg-white/95 backdrop-blur sticky top-0 z-50 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <!-- Logo Oficial LINC e Submarca -->
+            <!-- Logo Oficial LINC -->
             <div class="flex items-center space-x-3 cursor-pointer" onclick="app.navigate('home')">
                 <div class="h-12 flex items-center">
-                    <img id="nav-logo-img" src="Linc-Research-&-Innovation-horizontal-em-branco.png" alt="LINC Logo" class="h-10 w-auto object-contain">
+                    <img id="nav-logo-img" src="Linc-Research-&-Innovation-em-preto-.png" alt="LINC Logo" class="h-12 w-auto object-contain">
                 </div>
             </div>
 
             <!-- Navegação Pública -->
-            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
-                <button onclick="app.navigate('home')" class="hover:text-linc-turquoise transition">Início</button>
-                <button onclick="app.navigate('extensao')" class="hover:text-linc-turquoise transition">Programa de Extensão</button>
-                <button onclick="app.navigate('transparencia')" class="hover:text-linc-turquoise transition">Transparência</button>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-semibold text-linc-deep">
+                <button onclick="app.navigate('home')" class="hover:text-linc-blue transition">Início</button>
+                <button onclick="app.navigate('regras')" class="hover:text-linc-blue transition">Regras & Reembolso</button>
+                <button onclick="app.navigate('extensao')" class="hover:text-linc-blue transition">Curso Extensão</button>
+                <button onclick="app.navigate('transparencia')" class="hover:text-linc-blue transition">Transparência</button>
             </nav>
 
             <!-- Seletor de Perfis (RBAC Demo) e Autenticação -->
             <div class="flex items-center space-x-3">
                 <div class="relative inline-block text-left">
-                    <select id="role-selector" onchange="app.switchRole(this.value)" class="bg-linc-card border border-linc-border text-xs text-slate-300 rounded-lg px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                    <select id="role-selector" onchange="app.switchRole(this.value)" class="bg-slate-100 border border-slate-300 text-xs text-linc-deep rounded-lg px-2.5 py-2 focus:outline-none focus:ring-2 focus:ring-linc-blue font-medium">
                         <option value="public">Visão: Pública</option>
                         <option value="author">Visão: Autor/Inscrito</option>
                         <option value="reviewer">Visão: Parecerista (DE)</option>
+                        <option value="fundacao">Visão: Fundação de Apoio</option>
                         <option value="curator">Visão: Curadoria LINC</option>
                     </select>
                 </div>
 
                 <div id="auth-buttons" class="flex items-center space-x-2">
-                    <button onclick="app.openAuthModal('login')" class="text-xs px-3 py-2 text-slate-300 hover:text-white transition">Entrar</button>
-                    <button onclick="app.openAuthModal('register')" class="text-xs bg-linc-blue hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-semibold transition shadow-md">Inscrever-se</button>
+                    <button onclick="app.openAuthModal('login')" class="text-xs px-3 py-2 text-linc-deep font-semibold hover:text-linc-blue transition">Entrar</button>
+                    <button onclick="app.openAuthModal('register')" class="text-xs bg-linc-blue hover:bg-indigo-600 text-white px-4 py-2 rounded-lg font-bold transition shadow-md">Inscrever-se</button>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- BANNER DINÂMICO DE CONVERSÃO (FUNIL DE LEADS) -->
-    <div id="funnel-banner" class="bg-gradient-to-r from-linc-deep via-linc-card to-linc-deep border-b border-linc-border py-2.5 px-4">
+    <!-- BANNER DE DESTAQUE DAS REGRAS DO JOGO -->
+    <div id="funnel-banner" class="bg-linc-deep text-white py-2.5 px-4 shadow-inner">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs sm:text-sm gap-2">
             <div class="flex items-center space-x-2">
-                <span class="bg-linc-neon/20 text-linc-neon border border-linc-neon/30 px-2 py-0.5 rounded-full font-bold uppercase text-[10px]">Demanda Reprimida</span>
-                <span id="funnel-text" class="text-slate-200">Não obteve vaga nos processos regulares? Garanta prioridade no novo <strong>Curso de Extensão LINC</strong>!</span>
+                <span class="bg-linc-turquoise/20 text-linc-turquoise border border-linc-turquoise/40 px-2 py-0.5 rounded-full font-bold uppercase text-[10px]">Triagem com IA + Reembolso</span>
+                <span id="funnel-text" class="text-slate-200">Submissão com pré-validação por IA. Se o trabalho for negado pela banca, o valor da taxa é devolvido 100%.</span>
             </div>
-            <button onclick="app.navigate('extensao')" class="text-xs bg-linc-neon hover:bg-emerald-400 text-linc-deep font-bold px-3 py-1 rounded-md transition whitespace-nowrap">
-                Entrar na Lista de Espera →
+            <button onclick="app.navigate('regras')" class="text-xs bg-linc-turquoise hover:bg-emerald-300 text-linc-deep font-bold px-3 py-1 rounded-md transition whitespace-nowrap">
+                Conhecer Regras →
             </button>
         </div>
     </div>
@@ -100,83 +102,67 @@
         <!-- Conteúdo renderizado dinamicamente via JS -->
     </main>
 
-    <!-- FOOTER INSTITUCIONAL E LGPD -->
-    <footer class="border-t border-linc-border bg-linc-deep py-8 text-center text-xs text-slate-400">
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="border-t border-slate-200 bg-white py-8 text-center text-xs text-slate-500">
         <div class="max-w-7xl mx-auto px-4 space-y-3">
-            <div class="flex justify-center items-center space-x-2">
-                <img src="Linc-Research-&-Innovation-horizontal-em-branco.png" alt="LINC Brand" class="h-6 w-auto opacity-70">
-            </div>
-            <p id="footer-event-name">LINC Research & Innovation Group • LINC'S PROJECT / Sandbox</p>
-            <p class="text-slate-500">Gestão de Taxas e Bolsas via Fundação de Apoio Parceira • Conformidade Estrita com Termos LGPD (Lei 13.709/2018)</p>
+            <p id="footer-event-name" class="font-bold text-linc-deep">LINC Research & Innovation Group • LINC'S PROJECT / Sandbox</p>
+            <p class="text-slate-500">Gestão de Taxas e Bolsas via Fundação de Apoio Parceira • Conformidade Estrita com Termos LGPD</p>
         </div>
     </footer>
 
-    <!-- ========================================== -->
-    <!-- MODAL DE AUTENTICAÇÃO / LOGIN / REGISTRO   -->
-    <!-- ========================================== -->
-    <div id="auth-modal" class="fixed inset-0 z-50 bg-linc-deep/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-linc-card border border-linc-border w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
-            <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+    <!-- MODAL DE AUTENTICAÇÃO -->
+    <div id="auth-modal" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white border border-slate-200 w-full max-w-md rounded-2xl p-6 shadow-2xl relative">
+            <button onclick="app.closeAuthModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
                 <i data-lucide="x" class="w-5 h-5"></i>
             </button>
             
-            <!-- FORMULÁRIO DE LOGIN -->
             <div id="modal-login-form">
-                <h3 class="text-xl font-bold text-white mb-1">Acessar Conta</h3>
-                <p class="text-xs text-slate-400 mb-6">Entre no ecossistema LINC para submeter trabalhos ou emitir pareceres.</p>
+                <h3 class="text-xl font-bold text-linc-deep mb-1">Acessar Conta</h3>
+                <p class="text-xs text-slate-500 mb-6">Entre no ecossistema LINC para submeter trabalhos ou acompanhar status.</p>
                 <form onsubmit="app.handleLogin(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">E-mail Cadastrado</label>
-                        <input type="email" id="login-email" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                        <label class="block text-xs font-medium text-slate-700 mb-1">E-mail Cadastrado</label>
+                        <input type="email" id="login-email" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Senha</label>
-                        <input type="password" id="login-password" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                        <label class="block text-xs font-medium text-slate-700 mb-1">Senha</label>
+                        <input type="password" id="login-password" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                     </div>
-                    <button type="submit" class="w-full bg-linc-blue hover:bg-indigo-500 text-white font-medium py-2.5 rounded-lg text-sm transition">Entrar no Sistema</button>
+                    <button type="submit" class="w-full bg-linc-blue hover:bg-indigo-600 text-white font-bold py-2.5 rounded-lg text-sm transition">Entrar no Sistema</button>
                 </form>
             </div>
 
-            <!-- FORMULÁRIO DE REGISTRO -->
             <div id="modal-register-form" class="hidden">
-                <h3 class="text-xl font-bold text-white mb-1">Criar Conta LINC</h3>
-                <p class="text-xs text-slate-400 mb-6">Cadastro unificado. Enviaremos um e-mail de verificação para ativação.</p>
+                <h3 class="text-xl font-bold text-linc-deep mb-1">Criar Conta LINC</h3>
+                <p class="text-xs text-slate-500 mb-6">Cadastro de participante para submissão e acompanhamento.</p>
                 <form onsubmit="app.handleRegister(event)" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Nome Completo</label>
-                        <input type="text" id="reg-name" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                        <label class="block text-xs font-medium text-slate-700 mb-1">Nome Completo</label>
+                        <input type="text" id="reg-name" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">E-mail Oficial</label>
-                        <input type="email" id="reg-email" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                        <label class="block text-xs font-medium text-slate-700 mb-1">E-mail Oficial</label>
+                        <input type="email" id="reg-email" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-slate-300 mb-1">Senha</label>
-                        <input type="password" id="reg-password" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                        <label class="block text-xs font-medium text-slate-700 mb-1">Senha</label>
+                        <input type="password" id="reg-password" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                     </div>
-                    <div class="text-[11px] text-slate-400 leading-relaxed">
-                        Ao se cadastrar, você concorda com o tratamento de dados pessoais conforme as diretrizes da LGPD para fins estritos do ecossistema LINC.
-                    </div>
-                    <button type="submit" class="w-full bg-linc-turquoise hover:bg-emerald-400 text-linc-deep font-bold py-2.5 rounded-lg text-sm transition">Criar Conta e Confirmar E-mail</button>
+                    <button type="submit" class="w-full bg-linc-blue hover:bg-indigo-600 text-white font-bold py-2.5 rounded-lg text-sm transition">Criar Conta</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- ========================================== -->
-    <!-- ARQUITETURA JS E MÓDULOS DA APLICAÇÃO      -->
-    <!-- ========================================== -->
+    <!-- SCRIPT DE MÓDULOS E VISÕES -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // =========================================================================
-        // MÓDULO 1: CONFIGURAÇÃO DO EVENTO & LINC BRANDING
-        // =========================================================================
         const EVENT_CONFIG = {
             title: "JORNADA DE ENGENHARIA DE DADOS & INTELIGÊNCIA ARTIFICIAL",
-            shortName: "LINC Data&IA 2026",
             institution: "LINC Research & Innovation Group",
             subBrand: "LINC'S PROJECT / Sandbox",
             submissionFee: 50.00,
@@ -185,12 +171,6 @@
                 "Engenharia e Arquitetura de Dados",
                 "Análise de Dados, BI & Visualização",
                 "Aplicações de IA, Machine Learning & LLMs"
-            ],
-            rubrics: [
-                "Arquitetura da Solução Técnica",
-                "Qualidade do Tratamento Analítico",
-                "Aplicações Práticas de IA e Inovação",
-                "Viabilidade de Implantação e Reprodutibilidade"
             ]
         };
 
@@ -208,9 +188,6 @@
         const auth = getAuth(firebaseApp);
         const db = getFirestore(firebaseApp);
 
-        // =========================================================================
-        // MÓDULO 2: ESTADO GLOBAL (STATE)
-        // =========================================================================
         const state = {
             currentRole: 'public',
             currentView: 'home',
@@ -219,35 +196,42 @@
                 {
                     id: 'SUB-201',
                     pseudonymId: 'AUTH-9012',
+                    authorName: 'Carlos Eduardo',
                     title: 'Otimização de Pipeline Serverless para Big Data na Gestão Pública',
                     track: EVENT_CONFIG.tracks[0],
-                    status: 'Em Análise',
+                    aiStatus: 'Aprovado IA (Potencial Alto)',
+                    evalStatus: 'Em Análise',
+                    payStatus: 'Pago (Confirmado)',
                     score: null,
-                    date: '2026-09-20',
-                    paymentConfirmed: true
+                    date: '2026-09-20'
                 },
                 {
                     id: 'SUB-202',
                     pseudonymId: 'AUTH-4118',
+                    authorName: 'Mariana Silva',
                     title: 'Agente RAG para Triagem Automática em Módulos do LINC Sandbox',
                     track: EVENT_CONFIG.tracks[2],
-                    status: 'Aprovado',
+                    aiStatus: 'Aprovado IA (Potencial Alto)',
+                    evalStatus: 'Aprovado',
+                    payStatus: 'Pago (Confirmado)',
                     score: 9.6,
-                    date: '2026-09-22',
-                    paymentConfirmed: true
+                    date: '2026-09-22'
+                },
+                {
+                    id: 'SUB-203',
+                    pseudonymId: 'AUTH-7731',
+                    authorName: 'Lucas Mendes',
+                    title: 'Dashboard Estatístico de Desempenho Institucional',
+                    track: EVENT_CONFIG.tracks[1],
+                    aiStatus: 'Em Triagem IA',
+                    evalStatus: 'Aguardando Triagem',
+                    payStatus: 'Aguardando Liberação',
+                    score: null,
+                    date: '2026-09-25'
                 }
-            ],
-            metrics: {
-                totalSubmissions: 184,
-                totalRevenue: 9200.00,
-                leadsConverted: 2340,
-                budgetForGrants: 5520.00
-            }
+            ]
         };
 
-        // =========================================================================
-        // MÓDULO 3: CONTROLADOR PRINCIPAL DA APLICAÇÃO (APP CONTROLLER)
-        // =========================================================================
         window.app = {
             init() {
                 this.listenAuth();
@@ -257,11 +241,7 @@
             listenAuth() {
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
-                        state.currentUser = {
-                            email: user.email,
-                            emailVerified: user.emailVerified,
-                            uid: user.uid
-                        };
+                        state.currentUser = { email: user.email, uid: user.uid };
                     } else {
                         state.currentUser = null;
                     }
@@ -273,6 +253,7 @@
                 state.currentRole = role;
                 if (role === 'author') this.navigate('author-dashboard');
                 else if (role === 'reviewer') this.navigate('reviewer-dashboard');
+                else if (role === 'fundacao') this.navigate('fundacao-dashboard');
                 else if (role === 'curator') this.navigate('curator-dashboard');
                 else this.navigate('home');
             },
@@ -284,6 +265,9 @@
                 switch(view) {
                     case 'home':
                         container.innerHTML = Views.Home();
+                        break;
+                    case 'regras':
+                        container.innerHTML = Views.Regras();
                         break;
                     case 'extensao':
                         container.innerHTML = Views.Extensao();
@@ -297,9 +281,11 @@
                     case 'reviewer-dashboard':
                         container.innerHTML = Views.ReviewerDashboard();
                         break;
+                    case 'fundacao-dashboard':
+                        container.innerHTML = Views.FundacaoDashboard();
+                        break;
                     case 'curator-dashboard':
                         container.innerHTML = Views.CuratorDashboard();
-                        setTimeout(() => this.renderBICharts(), 100);
                         break;
                     default:
                         container.innerHTML = Views.Home();
@@ -322,37 +308,11 @@
                 document.getElementById('auth-modal').classList.add('hidden');
             },
 
-            async handleLogin(e) {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const pass = document.getElementById('login-password').value;
-                
-                try {
-                    await signInWithEmailAndPassword(auth, email, pass);
-                    alert('Autenticação realizada com sucesso!');
-                    this.closeAuthModal();
-                    this.switchRole('author');
-                } catch (error) {
-                    alert('Simulação de Autenticação Ativa (Modo Demo): ' + error.message);
-                    this.closeAuthModal();
-                    this.switchRole('author');
-                }
-            },
-
-            async handleRegister(e) {
-                e.preventDefault();
-                const email = document.getElementById('reg-email').value;
-                const pass = document.getElementById('reg-password').value;
-
-                try {
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-                    await sendEmailVerification(userCredential.user);
-                    alert('Registro LINC concluído! E-mail de verificação enviado para: ' + email);
-                    this.closeAuthModal();
-                } catch (error) {
-                    alert('Modo Demo LINC: Cadastro realizado! (Verificação enviada para ' + email + ')');
-                    this.closeAuthModal();
-                    this.switchRole('author');
+            togglePaymentStatus(subId) {
+                const item = state.submissions.find(s => s.id === subId);
+                if (item) {
+                    item.payStatus = item.payStatus === 'Pago (Confirmado)' ? 'Aguardando Liberação' : 'Pago (Confirmado)';
+                    this.navigate('fundacao-dashboard');
                 }
             },
 
@@ -364,329 +324,257 @@
                 const newSub = {
                     id: `SUB-${Math.floor(100 + Math.random() * 900)}`,
                     pseudonymId: `AUTH-${Math.floor(1000 + Math.random() * 9000)}`,
+                    authorName: 'Usuário Conectado',
                     title: title,
                     track: track,
-                    status: 'Em Análise',
+                    aiStatus: 'Aprovado IA (Potencial Alto)',
+                    evalStatus: 'Em Análise',
+                    payStatus: 'Liberado para Pagamento',
                     score: null,
-                    date: new Date().toISOString().split('T')[0],
-                    paymentConfirmed: true
+                    date: new Date().toISOString().split('T')[0]
                 };
 
                 state.submissions.push(newSub);
-                alert('Trabalho submetido com sucesso sob sigilo duplo-cego!');
+                alert('Trabalho submetido com sucesso! A Triagem prévia da IA liberou seu projeto para pagamento da taxa.');
                 this.navigate('author-dashboard');
-            },
-
-            submitReview(subId) {
-                const score = prompt('Insira a nota final de 0.0 a 10.0 para este trabalho:');
-                if (score !== null && !isNaN(parseFloat(score))) {
-                    const item = state.submissions.find(s => s.id === subId);
-                    if (item) {
-                        item.score = parseFloat(score);
-                        item.status = parseFloat(score) >= 7.0 ? 'Aprovado' : 'Rejeitado';
-                        alert(`Parecer registrado! A bolsa do parecerista foi contabilizada via Fundação de Apoio.`);
-                        this.navigate('reviewer-dashboard');
-                    }
-                }
-            },
-
-            renderBICharts() {
-                const ctxRevenue = document.getElementById('chartRevenue');
-                if (ctxRevenue) {
-                    new Chart(ctxRevenue, {
-                        type: 'line',
-                        data: {
-                            labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
-                            datasets: [{
-                                label: 'Arrecadação de Taxas (R$)',
-                                data: [1500, 3800, 6200, 9200],
-                                borderColor: '#3EDDBF',
-                                backgroundColor: 'rgba(62, 221, 191, 0.1)',
-                                fill: true,
-                                tension: 0.3
-                            }]
-                        },
-                        options: { responsive: true, plugins: { legend: { display: false } } }
-                    });
-                }
-
-                const ctxLeads = document.getElementById('chartLeads');
-                if (ctxLeads) {
-                    new Chart(ctxLeads, {
-                        type: 'bar',
-                        data: {
-                            labels: ['Inscritos Iniciais', 'Participantes Jornada', 'Lista Espera Extensão'],
-                            datasets: [{
-                                label: 'Total de Leads',
-                                data: [5000, 1840, 2340],
-                                backgroundColor: ['#5170FF', '#3EDDBF', '#63FF29']
-                            }]
-                        },
-                        options: { responsive: true, plugins: { legend: { display: false } } }
-                    });
-                }
-            },
-
-            exportCSV() {
-                let csvContent = "data:text/csv;charset=utf-8,ID_Pseudonimizado,Eixo_Tematico,Status_Avaliacao,Nota_Final,Data_Envio\n";
-                state.submissions.forEach(s => {
-                    csvContent += `${s.pseudonymId},"${s.track}",${s.status},${s.score || 'N/A'},${s.date}\n`;
-                });
-                const encodedUri = encodeURI(csvContent);
-                const link = document.createElement("a");
-                link.setAttribute("href", encodedUri);
-                link.setAttribute("download", `relatorio_anonimizado_linc_research.csv`);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
             },
 
             renderNavAuth() {
                 const authBtns = document.getElementById('auth-buttons');
                 if (state.currentUser) {
                     authBtns.innerHTML = `
-                        <span class="text-xs text-slate-300 font-mono hidden sm:inline">${state.currentUser.email}</span>
-                        <button onclick="app.switchRole('public')" class="text-xs text-red-400 hover:underline">Sair</button>
+                        <span class="text-xs text-slate-600 font-mono hidden sm:inline">${state.currentUser.email}</span>
+                        <button onclick="app.switchRole('public')" class="text-xs text-red-500 font-semibold hover:underline">Sair</button>
                     `;
                 }
             }
         };
 
-        // =========================================================================
-        // MÓDULO 4: TEMPLATES DA INTERFACE (VIEWS)
-        // =========================================================================
         const Views = {
             Home: () => `
-                <div class="space-y-12">
-                    <!-- Hero Section com Marca Oficial LINC -->
-                    <section class="text-center py-12 space-y-6 max-w-4xl mx-auto">
-                        <div class="flex justify-center mb-6">
-                            <img src="Linc-Research-&-Innovation-em-preto-.png" alt="LINC Research & Innovation Group" class="h-44 sm:h-52 w-auto object-contain bg-white/95 p-5 rounded-2xl shadow-2xl border border-linc-turquoise/30">
+                <div class="space-y-10">
+                    <!-- HERO SECTION CLARA E COM BOTÕES NO TOPO -->
+                    <section class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm">
+                        <div class="flex justify-center mb-2">
+                            <img src="Linc-Research-&-Innovation-em-preto-.png" alt="LINC Group" class="h-20 w-auto object-contain">
                         </div>
-                        <div class="inline-flex items-center space-x-2 bg-linc-blue/10 border border-linc-blue/30 px-4 py-1.5 rounded-full text-linc-turquoise text-xs font-semibold">
-                            <span>${EVENT_CONFIG.institution} • ${EVENT_CONFIG.subBrand}</span>
-                        </div>
-                        <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight leading-tight">
-                            JORNADA TECNOLÓGICA DE<br/>
-                            <span class="text-transparent bg-clip-text bg-gradient-to-r from-linc-turquoise via-linc-blue to-linc-neon">ENGENHARIA DE DADOS & IA</span>
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-linc-deep tracking-tight leading-tight">
+                            JORNADA TECNOLÓGICA DE <br/>
+                            <span class="text-linc-blue">ENGENHARIA DE DADOS & IA</span>
                         </h1>
-                        <p class="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto">
-                            O ecossistema onde raízes acadêmicas sustentam a inovação e a conexão de saberes. Valide seus projetos, publique cases técnicos e integre o LINC.
+                        <p class="text-slate-600 text-base max-w-2xl mx-auto">
+                            Plataforma oficial de submissão de cases técnicos do LINC Group. Processo seguro, pré-validação inteligente e garantia de reembolso integral em caso de não aprovação.
                         </p>
+
+                        <!-- BOTÕES SUPERIORES DE SUBMISSÃO E PAINEL -->
                         <div class="flex flex-wrap justify-center gap-4 pt-4">
-                            <button onclick="app.openAuthModal('register')" class="bg-linc-blue hover:bg-indigo-500 text-white font-bold px-6 py-3 rounded-xl transition shadow-lg shadow-linc-blue/30">
-                                Submeter Trabalho / Inscrição
+                            <button onclick="app.openAuthModal('register')" class="bg-linc-blue hover:bg-indigo-600 text-white font-bold px-8 py-3.5 rounded-xl transition shadow-lg shadow-linc-blue/20 flex items-center">
+                                <i data-lucide="upload-cloud" class="w-5 h-5 mr-2"></i> Submeter Trabalho / Case
                             </button>
-                            <button onclick="app.navigate('extensao')" class="bg-linc-card hover:bg-linc-border text-slate-200 border border-linc-border font-bold px-6 py-3 rounded-xl transition">
-                                Ver Programa de Extensão
+                            <button onclick="app.switchRole('author')" class="bg-slate-100 hover:bg-slate-200 text-linc-deep border border-slate-300 font-bold px-8 py-3.5 rounded-xl transition flex items-center">
+                                <i data-lucide="layout-dashboard" class="w-5 h-5 mr-2"></i> Painel do Participante
                             </button>
                         </div>
                     </section>
 
-                    <!-- Eixos Temáticos -->
+                    <!-- EIXOS TEMÁTICOS -->
                     <section class="grid md:grid-cols-3 gap-6">
                         ${EVENT_CONFIG.tracks.map((track, idx) => `
-                            <div class="bg-linc-card border border-linc-border p-6 rounded-2xl space-y-3 shadow-lg hover:border-linc-turquoise/40 transition">
-                                <div class="w-10 h-10 bg-linc-turquoise/10 text-linc-turquoise rounded-lg flex items-center justify-center font-bold">
+                            <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-3 shadow-sm hover:border-linc-blue/40 transition">
+                                <div class="w-10 h-10 bg-linc-blue/10 text-linc-blue rounded-lg flex items-center justify-center font-bold">
                                     0${idx + 1}
                                 </div>
-                                <h3 class="text-lg font-bold text-white">${track}</h3>
-                                <p class="text-xs text-slate-400">Estudos aplicados, arquiteturas de código e artigos técnicos focados em ${track.toLowerCase()}.</p>
+                                <h3 class="text-lg font-bold text-linc-deep">${track}</h3>
+                                <p class="text-xs text-slate-500">Submeta artigos técnicos, arquiteturas e cases práticos no eixo de ${track.toLowerCase()}.</p>
                             </div>
                         `).join('')}
                     </section>
                 </div>
             `,
 
-            Extensao: () => `
+            Regras: () => `
                 <div class="max-w-4xl mx-auto space-y-8">
-                    <div class="bg-linc-card border border-linc-border p-8 rounded-2xl space-y-4 shadow-xl">
-                        <span class="bg-linc-neon/20 text-linc-neon border border-linc-neon/30 px-3 py-1 rounded-full text-xs font-bold">Capacitação LINC</span>
-                        <h2 class="text-3xl font-bold text-white">${EVENT_CONFIG.extensionCourseName}</h2>
-                        <p class="text-slate-300 text-sm leading-relaxed">
-                            Desenvolvido pelo LINC Research & Innovation Group para canalizar candidatos qualificados e oferecer formação contínua e avançada.
-                        </p>
-                        <ul class="text-xs text-slate-300 space-y-2 py-2">
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-linc-neon mr-2"></i> Módulos focados nas necessidades reais do mercado de tecnologia.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-linc-neon mr-2"></i> Certificação expedida pelo programa de Extensão do LINC Group.</li>
-                            <li class="flex items-center"><i data-lucide="check" class="w-4 h-4 text-linc-neon mr-2"></i> Aulas ministradas por pesquisadores e pareceristas atuantes do LINC.</li>
-                        </ul>
-                        <div class="pt-4 border-t border-linc-border">
-                            <form onsubmit="alert('Inscrição na Lista de Espera confirmada!'); return false;" class="flex flex-col sm:flex-row gap-3">
-                                <input type="email" placeholder="Seu e-mail de contato" required class="flex-1 bg-linc-deep border border-linc-border rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
-                                <button type="submit" class="bg-linc-turquoise hover:bg-emerald-400 text-linc-deep font-bold px-6 py-2.5 rounded-lg text-sm transition">Garantir Prioridade</button>
-                            </form>
+                    <div class="bg-white border border-slate-200 p-8 rounded-3xl space-y-6 shadow-sm">
+                        <div>
+                            <span class="bg-linc-blue/10 text-linc-blue border border-linc-blue/20 px-3 py-1 rounded-full text-xs font-bold">Transparência Institucional</span>
+                            <h2 class="text-2xl font-bold text-linc-deep mt-2">Regras do Evento & Política Financeira</h2>
+                            <p class="text-xs text-slate-500">Termos pactuados entre o LINC Research Group, Participantes e Fundação de Apoio.</p>
                         </div>
-                    </div>
-                </div>
-            `,
 
-            Transparencia: () => `
-                <div class="space-y-6">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">Relatório Público de Transparência</h2>
-                        <p class="text-xs text-slate-400">Modelo financeiro e jurídico gerido via Fundação de Apoio parceira do LINC Group.</p>
-                    </div>
+                        <div class="space-y-4 text-xs text-slate-700 leading-relaxed">
+                            <div class="border-l-4 border-linc-blue pl-4 py-1">
+                                <h4 class="font-bold text-linc-deep text-sm mb-1">1. Triagem Prévia Inteligente por IA</h4>
+                                <p>Antes de qualquer pagamento, todo trabalho submetido passa por uma pré-análise algorítmica. Se o trabalho não atingir o potencial técnico mínimo, ele é recusado sem custo para o participante.</p>
+                            </div>
 
-                    <div class="grid sm:grid-cols-3 gap-4">
-                        <div class="bg-linc-card border border-linc-border p-4 rounded-xl">
-                            <span class="text-xs text-slate-400">Arrecadação Bruta (Taxas)</span>
-                            <p class="text-xl font-bold text-linc-turquoise mt-1">R$ ${state.metrics.totalRevenue.toFixed(2)}</p>
-                        </div>
-                        <div class="bg-linc-card border border-linc-border p-4 rounded-xl">
-                            <span class="text-xs text-slate-400">Fundo de Bolsas de Parecer (DE)</span>
-                            <p class="text-xl font-bold text-linc-blue mt-1">R$ ${state.metrics.budgetForGrants.toFixed(2)}</p>
-                        </div>
-                        <div class="bg-linc-card border border-linc-border p-4 rounded-xl">
-                            <span class="text-xs text-slate-400">Trabalhos Submetidos</span>
-                            <p class="text-xl font-bold text-white mt-1">${state.metrics.totalSubmissions}</p>
-                        </div>
-                    </div>
+                            <div class="border-l-4 border-emerald-500 pl-4 py-1">
+                                <h4 class="font-bold text-linc-deep text-sm mb-1">2. Liberação de Taxa e Avaliação Duplo-Cega</h4>
+                                <p>Após ser aprovado na Triagem IA, o participante recebe a liberação para efetuar a taxa de submissão (R$ 50,00) via Fundação de Apoio. Confirmado o pagamento, o projeto é enviado em formato sigiloso (Double-Blind) para os pareceristas.</p>
+                            </div>
 
-                    <div class="bg-linc-card border border-linc-border p-6 rounded-xl space-y-3">
-                        <h3 class="text-sm font-bold text-white">Gestão Autossustentável e Concessão de Bolsas</h3>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            A arrecadação proveniente da taxa de participação/submissão (R$ ${EVENT_CONFIG.submissionFee.toFixed(2)}) é gerida por Fundação de Apoio parceira e revertida para pagamento legal de bolsas de avaliação para pesquisadores/docentes sob regime de Dedicação Exclusiva (DE), assegurando amparo jurídico e sustentabilidade da Jornada Tecnológica.
-                        </p>
+                            <div class="border-l-4 border-amber-500 pl-4 py-1">
+                                <h4 class="font-bold text-linc-deep text-sm mb-1">3. Garantia de Reembolso Integral (100%)</h4>
+                                <p>Caso o trabalho seja avaliado pela banca examinadora e receba o parecer final de <strong>REJEITADO</strong>, a Fundação de Apoio fará a devolução integral (100%) do valor pago em até 15 dias úteis.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             `,
 
             AuthorDashboard: () => `
                 <div class="space-y-8">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">Painel do Autor / Participante</h2>
-                        <p class="text-xs text-slate-400">Gerencie submissões no ecossistema LINC.</p>
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h2 class="text-2xl font-bold text-linc-deep">Painel do Participante / Autor</h2>
+                            <p class="text-xs text-slate-500">Acompanhe seus trabalhos, status de triagem e situação financeira.</p>
+                        </div>
                     </div>
 
-                    <div class="bg-linc-card border border-linc-border p-6 rounded-2xl space-y-4">
-                        <h3 class="text-lg font-bold text-white flex items-center">
-                            <i data-lucide="upload-cloud" class="w-5 h-5 mr-2 text-linc-turquoise"></i>
-                            Submeter Novo Trabalho / Case Técnico
+                    <!-- FORMULÁRIO DE SUBMISSÃO RÁPIDA -->
+                    <div class="bg-white border border-slate-200 p-6 rounded-2xl space-y-4 shadow-sm">
+                        <h3 class="text-base font-bold text-linc-deep flex items-center">
+                            <i data-lucide="file-plus" class="w-5 h-5 mr-2 text-linc-blue"></i>
+                            Nova Submissão de Trabalho / Case
                         </h3>
                         <form onsubmit="app.handleSubmission(event)" class="space-y-4">
                             <div>
-                                <label class="block text-xs font-medium text-slate-300 mb-1">Título do Trabalho</label>
-                                <input type="text" id="sub-title" required class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                                <label class="block text-xs font-medium text-slate-700 mb-1">Título do Trabalho</label>
+                                <input type="text" id="sub-title" required class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                             </div>
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-xs font-medium text-slate-300 mb-1">Eixo Técnico</label>
-                                    <select id="sub-track" class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-linc-blue">
+                                    <label class="block text-xs font-medium text-slate-700 mb-1">Eixo Técnico</label>
+                                    <select id="sub-track" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-linc-blue">
                                         ${EVENT_CONFIG.tracks.map(t => `<option>${t}</option>`).join('')}
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-medium text-slate-300 mb-1">Arquivo PDF (Sem identificação dos autores)</label>
-                                    <input type="file" accept=".pdf" class="w-full bg-linc-deep border border-linc-border rounded-lg px-3 py-1.5 text-xs text-slate-400 focus:outline-none">
+                                    <label class="block text-xs font-medium text-slate-700 mb-1">Arquivo PDF (Pseudonimizado)</label>
+                                    <input type="file" accept=".pdf" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-1.5 text-xs text-slate-500 focus:outline-none">
                                 </div>
                             </div>
-                            <div class="text-[11px] text-amber-300 bg-amber-500/10 border border-amber-500/20 p-2.5 rounded-lg">
-                                ⚠️ <strong>Diretriz LGPD / Double-Blind Review:</strong> O arquivo PDF não deve conter nomes ou e-mails. O sistema gerará um ID sigiloso pseudonimizado.
-                            </div>
-                            <button type="submit" class="bg-linc-blue hover:bg-indigo-500 text-white font-bold px-4 py-2 rounded-lg text-sm transition">Enviar para Avaliação</button>
+                            <button type="submit" class="bg-linc-blue hover:bg-indigo-600 text-white font-bold px-5 py-2.5 rounded-lg text-xs transition">
+                                Enviar para Triagem Automática IA
+                            </button>
                         </form>
                     </div>
 
-                    <div class="bg-linc-card border border-linc-border rounded-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-linc-border">
-                            <h3 class="text-sm font-bold text-white">Meus Trabalhos Submetidos</h3>
+                    <!-- TABELA DE STATUS DO PARTICIPANTE -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50">
+                            <h3 class="text-sm font-bold text-linc-deep">Meus Trabalhos e Status Financeiro</h3>
                         </div>
-                        <div class="divide-y divide-linc-border">
+                        <div class="divide-y divide-slate-200">
                             ${state.submissions.map(sub => `
-                                <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                    <div class="space-y-1">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-xs font-mono text-linc-turquoise">${sub.id}</span>
-                                            <span class="bg-linc-deep text-slate-300 text-[10px] px-2 py-0.5 rounded border border-linc-border">${sub.track}</span>
+                                <div class="p-6 space-y-3">
+                                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                                        <div class="space-y-1">
+                                            <span class="text-xs font-mono text-linc-blue font-bold">${sub.id}</span>
+                                            <h4 class="font-bold text-linc-deep text-sm">${sub.title}</h4>
+                                            <p class="text-xs text-slate-500">${sub.track} • Submetido em: ${sub.date}</p>
                                         </div>
-                                        <h4 class="font-bold text-white text-sm">${sub.title}</h4>
-                                        <p class="text-xs text-slate-400">Data de Envio: ${sub.date}</p>
                                     </div>
-                                    <div class="text-right">
-                                        <span class="block text-xs font-semibold ${sub.status === 'Aprovado' ? 'text-linc-neon' : 'text-amber-400'}">${sub.status}</span>
-                                        <span class="text-xs text-slate-400">${sub.score !== null ? 'Nota: ' + sub.score : 'Aguardando Parecer'}</span>
+                                    <div class="grid sm:grid-cols-3 gap-3 pt-2 border-t border-slate-100">
+                                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                                            <span class="text-[10px] text-slate-500 font-bold block uppercase">Triagem IA:</span>
+                                            <span class="text-xs font-semibold text-indigo-600">${sub.aiStatus}</span>
+                                        </div>
+                                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                                            <span class="text-[10px] text-slate-500 font-bold block uppercase">Status da Avaliação:</span>
+                                            <span class="text-xs font-semibold ${sub.evalStatus === 'Aprovado' ? 'text-emerald-600' : 'text-amber-600'}">${sub.evalStatus}</span>
+                                        </div>
+                                        <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+                                            <span class="text-[10px] text-slate-500 font-bold block uppercase">Situação Financeira:</span>
+                                            <span class="text-xs font-semibold ${sub.payStatus.includes('Pago') ? 'text-emerald-600' : 'text-blue-600'}">${sub.payStatus}</span>
+                                        </div>
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
                     </div>
+                </div>
+            `,
+
+            FundacaoDashboard: () => `
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-linc-deep">Painel de Gestão — Fundação de Apoio</h2>
+                        <p class="text-xs text-slate-500">Ambiente simplificado para conciliação financeira, checagem de pagamentos e estornos.</p>
+                    </div>
+
+                    <!-- PAINEL DE CONCILIAÇÃO RÁPIDA -->
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="px-6 py-4 border-b border-slate-200 bg-slate-50 flex justify-between items-center">
+                            <h3 class="text-sm font-bold text-linc-deep">Planilha de Checagem e Status de Taxas</h3>
+                            <span class="text-xs bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">3 Registros</span>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100 text-[11px] text-slate-600 uppercase">
+                                        <th class="p-3 border-b">ID / Autor</th>
+                                        <th class="p-3 border-b">Título</th>
+                                        <th class="p-3 border-b">Status IA</th>
+                                        <th class="p-3 border-b">Pagamento</th>
+                                        <th class="p-3 border-b text-right">Ação Fundação</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-200 text-xs">
+                                    ${state.submissions.map(sub => `
+                                        <tr>
+                                            <td class="p-3">
+                                                <span class="font-mono font-bold text-linc-blue">${sub.id}</span>
+                                                <span class="block text-[11px] text-slate-500">${sub.authorName}</span>
+                                            </td>
+                                            <td class="p-3 font-medium text-slate-800 max-w-xs truncate">${sub.title}</td>
+                                            <td class="p-3"><span class="bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded font-semibold">${sub.aiStatus}</span></td>
+                                            <td class="p-3">
+                                                <span class="font-bold ${sub.payStatus.includes('Pago') ? 'text-emerald-600' : 'text-amber-600'}">${sub.payStatus}</span>
+                                            </td>
+                                            <td class="p-3 text-right">
+                                                <button onclick="app.togglePaymentStatus('${sub.id}')" class="bg-linc-blue text-white text-[11px] font-bold px-3 py-1.5 rounded hover:bg-indigo-600 transition">
+                                                    Alternar Pago / Aberto
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            `,
+
+            Extensao: () => `
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <div class="bg-white border border-slate-200 p-8 rounded-3xl space-y-4 shadow-sm">
+                        <span class="bg-linc-blue/10 text-linc-blue border border-linc-blue/20 px-3 py-1 rounded-full text-xs font-bold">Lançamento Exclusivo</span>
+                        <h2 class="text-3xl font-bold text-linc-deep">${EVENT_CONFIG.extensionCourseName}</h2>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Curso prático e avançado com certificação oficial do LINC Group para capacitação de profissionais e alunos de tecnologia.
+                        </p>
+                    </div>
+                </div>
+            `,
+
+            Transparencia: () => `
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-linc-deep">Relatórios de Transparência</h2>
+                    <p class="text-xs text-slate-500">Acompanhamento contábil das taxas arrecadadas e repasses de bolsas.</p>
                 </div>
             `,
 
             ReviewerDashboard: () => `
-                <div class="space-y-8">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white">Ambiente do Parecerista / Avaliador (DE)</h2>
-                        <p class="text-xs text-slate-400">Avaliação Duplo-Cega com acumulação de bolsas via Fundação de Apoio.</p>
-                    </div>
-
-                    <div class="bg-linc-card border border-linc-border p-4 rounded-xl flex items-center justify-between">
-                        <div>
-                            <span class="text-xs text-slate-400">Previsão Acumulada de Bolsas de Parecer</span>
-                            <p class="text-xl font-bold text-linc-turquoise">R$ ${(state.submissions.filter(s => s.score !== null).length * 150).toFixed(2)}</p>
-                        </div>
-                        <span class="text-xs bg-linc-turquoise/10 text-linc-turquoise border border-linc-turquoise/20 px-3 py-1 rounded-full">Pesquisador / Docente DE</span>
-                    </div>
-
-                    <div class="bg-linc-card border border-linc-border p-4 rounded-xl space-y-2">
-                        <span class="text-xs text-slate-400 font-bold uppercase tracking-wider block">Rubricas de Avaliação Aplicadas:</span>
-                        <div class="flex flex-wrap gap-2">
-                            ${EVENT_CONFIG.rubrics.map(r => `<span class="text-[11px] bg-linc-deep text-slate-300 px-2.5 py-1 rounded-md border border-linc-border">${r}</span>`).join('')}
-                        </div>
-                    </div>
-
-                    <div class="bg-linc-card border border-linc-border rounded-2xl overflow-hidden">
-                        <div class="px-6 py-4 border-b border-linc-border">
-                            <h3 class="text-sm font-bold text-white">Trabalhos Atribuídos (Double-Blind / Sigilo LGPD)</h3>
-                        </div>
-                        <div class="divide-y divide-linc-border">
-                            ${state.submissions.map(sub => `
-                                <div class="p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                                    <div class="space-y-1">
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-xs font-mono bg-linc-deep text-slate-300 px-2 py-0.5 rounded border border-linc-border">ID Sigiloso: ${sub.pseudonymId}</span>
-                                            <span class="text-xs text-linc-turquoise">${sub.track}</span>
-                                        </div>
-                                        <h4 class="font-bold text-white text-sm">${sub.title}</h4>
-                                        <p class="text-xs text-slate-400">Documento em PDF disponível para leitura</p>
-                                    </div>
-                                    <div>
-                                        ${sub.score !== null ? `
-                                            <span class="text-xs bg-linc-neon/10 text-linc-neon px-3 py-1.5 rounded-lg border border-linc-neon/20 font-bold">Avaliado (${sub.score})</span>
-                                        ` : `
-                                            <button onclick="app.submitReview('${sub.id}')" class="bg-linc-blue hover:bg-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg text-xs transition">Emitir Parecer</button>
-                                        `}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-linc-deep">Painel do Parecerista</h2>
+                    <p class="text-xs text-slate-500">Avaliação duplo-cega de trabalhos submetidos.</p>
                 </div>
             `,
 
             CuratorDashboard: () => `
-                <div class="space-y-8">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        <div>
-                            <h2 class="text-2xl font-bold text-white">Painel de Curadoria LINC Group</h2>
-                            <p class="text-xs text-slate-400">Acompanhamento do funil de conversão e gestão de relatórios do projeto.</p>
-                        </div>
-                        <button onclick="app.exportCSV()" class="bg-linc-turquoise hover:bg-emerald-400 text-linc-deep font-bold px-4 py-2 rounded-lg text-xs flex items-center transition">
-                            <i data-lucide="download" class="w-4 h-4 mr-2"></i> Exportar Base Anonimizada (CSV)
-                        </button>
-                    </div>
-
-                    <div class="grid sm:grid-cols-2 gap-6">
-                        <div class="bg-linc-card border border-linc-border p-6 rounded-2xl space-y-4">
-                            <h3 class="text-sm font-bold text-white">Arrecadação de Taxas vs. Projeção de Bolsas</h3>
-                            <canvas id="chartRevenue" class="max-h-56"></canvas>
-                        </div>
-                        <div class="bg-linc-card border border-linc-border p-6 rounded-2xl space-y-4">
-                            <h3 class="text-sm font-bold text-white">Funil de Leads (Inscritos / Evento / Extensão)</h3>
-                            <canvas id="chartLeads" class="max-h-56"></canvas>
-                        </div>
-                    </div>
+                <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-linc-deep">Painel de Curadoria LINC</h2>
+                    <p class="text-xs text-slate-500">Métricas gerais e exportação de relatórios anonimizados.</p>
                 </div>
             `
         };
