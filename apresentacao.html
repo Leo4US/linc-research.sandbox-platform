@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apresentação Executiva — Jornada Tecnológica LINC</title>
+
+    <!-- Tipografia Oficial: Bai Jamjuree -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Bai Jamjuree"', 'sans-serif'],
+                    },
+                    colors: {
+                        linc: {
+                            deep: '#1C1B45',      /* Azul Profundo Institucional */
+                            blue: '#5170FF',      /* Azul Mídia */
+                            turquoise: '#3EDDBF', /* Turquesa */
+                            neon: '#63FF29',      /* Verde Neon */
+                            lightBg: '#F8FAFC'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="h-full bg-linc-lightBg text-slate-800 font-sans flex flex-col justify-between p-4 sm:p-8 selection:bg-linc-blue selection:text-white">
+
+    <!-- HEADER DA APRESENTAÇÃO -->
+    <header class="max-w-6xl w-full mx-auto flex justify-between items-center border-b border-slate-200 pb-4">
+        <div class="flex items-center space-x-3">
+            <img src="Linc-Research-&-Innovation-em-preto-.png" alt="LINC Group" class="h-10 w-auto object-contain">
+            <span class="text-xs font-bold text-linc-deep uppercase tracking-wider hidden sm:inline">| Projeto Institucional & Aprovação</span>
+        </div>
+        <div class="text-xs text-slate-500 font-semibold">
+            Slide <span id="current-slide" class="text-linc-blue font-bold">1</span> de <span id="total-slides">6</span>
+        </div>
+    </header>
+
+    <!-- CONTAINER DOS SLIDES (CONTEÚDO DINÂMICO) -->
+    <main id="slide-container" class="max-w-5xl w-full mx-auto my-auto py-6">
+        <!-- Renderizado via JavaScript -->
+    </main>
+
+    <!-- FOOTER E CONTROLES DE NAVEGAÇÃO -->
+    <footer class="max-w-6xl w-full mx-auto flex justify-between items-center border-t border-slate-200 pt-4">
+        <div class="text-xs text-slate-500">
+            LINC Research & Innovation Group • LINC'S PROJECT / Sandbox
+        </div>
+        <div class="flex items-center space-x-3">
+            <button onclick="prevSlide()" class="bg-white border border-slate-300 text-linc-deep font-bold px-4 py-2 rounded-lg text-xs hover:bg-slate-100 transition flex items-center">
+                ← Anterior
+            </button>
+            <button onclick="nextSlide()" class="bg-linc-blue text-white font-bold px-4 py-2 rounded-lg text-xs hover:bg-indigo-600 transition flex items-center shadow-md">
+                Próximo →
+            </button>
+        </div>
+    </footer>
+
+    <script>
+        const slides = [
+            // Slide 1: Capa
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-sm">
+                <div class="inline-flex items-center space-x-2 bg-linc-blue/10 border border-linc-blue/20 px-4 py-1 rounded-full text-linc-blue text-xs font-bold">
+                    <span>Apresentação de Projeto & Termo de Referência</span>
+                </div>
+                <h1 class="text-3xl sm:text-5xl font-extrabold text-linc-deep tracking-tight leading-tight">
+                    JORNADA TECNOLÓGICA DE <br/>
+                    <span class="text-linc-blue">ENGENHARIA DE DADOS & IA</span>
+                </h1>
+                <p class="text-slate-600 text-base max-w-2xl mx-auto">
+                    Plataforma Serverless de Submissão, Triagem Inteligente e Gestão de Fluxo Financeiro via Fundação de Apoio.
+                </p>
+                <div class="pt-4 border-t border-slate-100 text-xs font-bold text-slate-500">
+                    LINC Research & Innovation Group • 2026
+                </div>
+            </div>
+            `,
+
+            // Slide 2: Contexto e Oportunidade
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+                <h2 class="text-2xl font-extrabold text-linc-deep border-b border-slate-100 pb-3">1. Contexto & Oportunidade Estratégica</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-3">
+                        <span class="bg-amber-100 text-amber-800 font-bold px-2.5 py-1 rounded-full text-xs">Desafio</span>
+                        <h3 class="font-bold text-linc-deep text-base">Demanda Reprimida de Talentos</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Aumento expressivo na procura por formação qualificada em Dados e IA. Necessidade de engajar candidates qualificados excedentes de processos seletivos regulares.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-3">
+                        <span class="bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full text-xs">Solução</span>
+                        <h3 class="font-bold text-linc-deep text-base">Jornada Tecnológica & Funil de Extensão</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">
+                            Criação de um evento tecnológico de submissão de cases técnicos, validando competências e direcionando participantes para o novo Curso de Extensão LINC.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            `,
+
+            // Slide 3: Arquitetura Serverless
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+                <h2 class="text-2xl font-extrabold text-linc-deep border-b border-slate-100 pb-3">2. Arquitetura Técnica & Escalabilidade Serverless</h2>
+                <div class="grid md:grid-cols-3 gap-4 text-xs">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+                        <i data-lucide="globe" class="w-6 h-6 text-linc-blue"></i>
+                        <h4 class="font-bold text-linc-deep text-sm">Hospedagem GitHub Pages</h4>
+                        <p class="text-slate-600">Aplicação web em arquivo único (SPA), leve, responsiva e com tempo de carregamento imediato.</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-linc-blue"></i>
+                        <h4 class="font-bold text-linc-deep text-sm">Autenticação & Verificação</h4>
+                        <p class="text-slate-600">Firebase Auth com confirmação obrigatória por e-mail para acesso às submissões e painéis.</p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 space-y-2">
+                        <i data-lucide="database" class="w-6 h-6 text-linc-blue"></i>
+                        <h4 class="font-bold text-linc-deep text-sm">Cloud Firestore & Storage</h4>
+                        <p class="text-slate-600">Armazenamento em nuvem distribuído para até 5.000 inscrições e PDFs com conformidade estrita com a LGPD.</p>
+                    </div>
+                </div>
+            </div>
+            `,
+
+            // Slide 4: Fluxo de Triagem e Reembolso
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+                <h2 class="text-2xl font-extrabold text-linc-deep border-b border-slate-100 pb-3">3. Fluxo de Triagem por IA e Política de Reembolso</h2>
+                <div class="space-y-3 text-xs">
+                    <div class="flex items-start space-x-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <span class="bg-linc-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center shrink-0">1</span>
+                        <div>
+                            <strong class="text-linc-deep block">Submissão Gratuita Inicial:</strong>
+                            <span class="text-slate-600">O participante cadastra seu trabalho/case em formato PDF pseudonimizado.</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <span class="bg-linc-blue text-white font-bold w-6 h-6 rounded-full flex items-center justify-center shrink-0">2</span>
+                        <div>
+                            <strong class="text-linc-deep block">Pré-Análise Algorítmica (IA):</strong>
+                            <span class="text-slate-600">O sistema realiza uma triagem automática de potencial. Se aprovado, libera o link de pagamento da taxa (R$ 50,00).</span>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 bg-emerald-50 p-3.5 rounded-xl border border-emerald-200">
+                        <span class="bg-emerald-600 text-white font-bold w-6 h-6 rounded-full flex items-center justify-center shrink-0">3</span>
+                        <div>
+                            <strong class="text-emerald-900 block">Garantia de Reembolso Integral (100%):</strong>
+                            <span class="text-emerald-800">Se o trabalho for avaliado pela banca e receber o parecer final de "Rejeitado", a Fundação de Apoio realiza a devolução total da taxa.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `,
+
+            // Slide 5: Rubricas dos Pareceristas
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+                <h2 class="text-2xl font-extrabold text-linc-deep border-b border-slate-100 pb-3">4. Critérios de Avaliação (Pareceristas)</h2>
+                <div class="grid sm:grid-cols-2 gap-3 text-xs">
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="font-bold text-linc-blue block">1. Estrutura do Texto</span>
+                        <span class="text-slate-600">Organização lógica, clareza técnica e norma culta.</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="font-bold text-linc-blue block">2. Delimitação do Tema</span>
+                        <span class="text-slate-600">Relevância do problema investigado.</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="font-bold text-linc-blue block">3. Aderência Técnica</span>
+                        <span class="text-slate-600">Alinhamento com os eixos do LINC Group.</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                        <span class="font-bold text-linc-blue block">4. Replicabilidade</span>
+                        <span class="text-slate-600">Rigor metodológico e clareza de código/arquitetura.</span>
+                    </div>
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 sm:col-span-2">
+                        <span class="font-bold text-linc-blue block">5. Aplicação & Impacto</span>
+                        <span class="text-slate-600">Potencial de aplicação prática e inovação gerada.</span>
+                    </div>
+                </div>
+            </div>
+            `,
+
+            // Slide 6: Fundação de Apoio
+            `
+            <div class="bg-white border border-slate-200 rounded-3xl p-8 sm:p-12 space-y-6 shadow-sm">
+                <h2 class="text-2xl font-extrabold text-linc-deep border-b border-slate-100 pb-3">5. Operação da Fundação de Apoio & Bolsas</h2>
+                <div class="space-y-4 text-xs text-slate-700">
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-linc-deep text-sm mb-1">Painel Unificado de Conciliação</h4>
+                        <p class="text-slate-600">Interface simples para checagem rápida de depósitos, alteração de status de pagamento e exportação de relatórios em .CSV.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                        <h4 class="font-bold text-linc-deep text-sm mb-1">Destinação dos Recursos & Bolsas (DE)</h4>
+                        <p class="text-slate-600">A arrecadação das taxas mantidas é destinada ao custeio operacional do evento e ao pagamento regular de bolsas de avaliação para docentes e pesquisadores sob regime de Dedicação Exclusiva (DE).</p>
+                    </div>
+                </div>
+            `
+        ];
+
+        let currentSlide = 0;
+
+        function renderSlide() {
+            document.getElementById('slide-container').innerHTML = slides[currentSlide];
+            document.getElementById('current-slide').innerText = currentSlide + 1;
+            document.getElementById('total-slides').innerText = slides.length;
+            lucide.createIcons();
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                renderSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                renderSlide();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', renderSlide);
+    </script>
+</body>
+</html>
